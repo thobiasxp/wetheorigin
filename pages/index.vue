@@ -92,16 +92,19 @@ export default {
         return
       }
       console.log("\n Paying...");
-      fetch("/pay", {
-          method: "POST",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify(token)
-        })
-        .then(output => {
-          console.log("Output")
-          // if (output.status === "succeeded")
-          //   document.getElementById("shop").innerHTML = "<p>Purchase complete!</p>";
-        })
+      var result = await this.$axios.$post('http://localhost/api/pay', {keyword: ""}, { progress: true })
+      console.log("\n Result...",result);
+
+    //   fetch("/pay", {
+    //       method: "POST",
+    //       headers: {"Content-Type": "application/json"},
+    //       body: JSON.stringify(token)
+    //     })
+    //     .then(output => {
+    //       console.log("Output")
+    //       // if (output.status === "succeeded")
+    //       //   document.getElementById("shop").innerHTML = "<p>Purchase complete!</p>";
+    //     })
        
 
     }
