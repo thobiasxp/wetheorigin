@@ -8,19 +8,17 @@
           <b-form-radio v-model="amount" @change="inhide()"  value="5">$5.00</b-form-radio>
           <b-form-radio v-model="amount" @change="inhide()"  value="10">$10.00</b-form-radio>
           <b-form-radio v-model="amount" @change="inhide()"  value="20">$20.00</b-form-radio>
-          <b-form-radio v-model="amount" @change="inshowhide()"  :value="amount">other</b-form-radio>
+          <b-form-radio v-model="amount" @change="inshowhide()"  value="amount">other</b-form-radio>
         </b-form-group>
          <div v-show="showinput">
             <b-input type="number" style="width:200px;" v-model="amount" class="form-control" value=""></b-input>
           </div>
-      <div class="m-lg-4">
-        <b-button squared variant="primary">Pay</b-button>
-      </div>
-      <div class="m-md-5 mt-lg-n4">
+      <div class="m-lg-4" v-show="payButton">
+        <b-button squared variant="primary" @click="showCardDetails">Pay</b-button>
         <p>Or pay with credit card or PayPal</p>
       </div>
       
-      <div class="m-md-12">
+      <div class="m-md-12" v-show="cardDetails">
       <client-only placeholder="Chargement...">
         <div class="m-md-12">
           <div uk-grid>
@@ -66,7 +64,9 @@ export default {
   data() {
     return {
       amount: "",
-      showinput: false
+      showinput: false,
+      payButton: true,
+      cardDetails: false
     };
   },
   methods: {
@@ -75,6 +75,10 @@ export default {
     },
     inshowhide() {
       this.showinput = true;
+    },
+    showCardDetails(){
+this.payButton = false,
+this.cardDetails = true
     },
    async handleSubmit() {
       console.log("To do Store in db");
