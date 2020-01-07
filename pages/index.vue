@@ -55,7 +55,6 @@
     <div class="m-md-12 el-center"  v-show="successPage">
       <div style="padding:10%;">
       <h1 style="color:green;">Thank You !</h1>
-      <mdb-icon icon="check-square" />
       <h5 style="color:gray;">Your Tip is received... </h5>
       </div>
     </div>
@@ -109,7 +108,6 @@ export default {
       console.log("To do Store in db");
     },
     async pay() {
-      this.loading = true
       let token
       try {
         const response = await createToken()
@@ -118,12 +116,10 @@ export default {
       } catch (err) {
         alert('An error occurred in get token.')
         console.log(err)
-        this.loading = false
         return
       }
       console.log("\n Paying...")
       var reqData = {token : token, amount: this.amount}
-      this.loading = true 
       var result = await this.$axios.$post('http://zap.wetheorgin.com/api/pay', reqData, { progress: true })
       console.log("\n Result is : ",result);
       if(result && result.status === "200" && result.receipt_url){
@@ -133,7 +129,6 @@ export default {
             this.payment = false
             this.failurePage = true
         }
-          this.loading = false       
 
     }
   }
