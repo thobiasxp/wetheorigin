@@ -1,17 +1,17 @@
 <template>
   <b-col align-h="center">
-    <div class="m-md-5">
+    <div class="m-md-5" v-show="payment">
       <h4>Send a Tip to Rosario</h4>
       <p>97% of your tip goes directly to support Rosario and his family. See the full breakdown of costs.</p>
-        <b-form-group label="Individual radios">
-          <b-form-radio v-model="amount" @change="inhide()"  value="1">$1.00</b-form-radio>
+        <b-form-group>
+          <b-form-radio v-model="amount" @change="inhide()"  value="1" checked>$1.00</b-form-radio>
           <b-form-radio v-model="amount" @change="inhide()"  value="5">$5.00</b-form-radio>
           <b-form-radio v-model="amount" @change="inhide()"  value="10">$10.00</b-form-radio>
           <b-form-radio v-model="amount" @change="inhide()"  value="20">$20.00</b-form-radio>
           <b-form-radio v-model="amount" @change="inshowhide()"  value="amount">other</b-form-radio>
         </b-form-group>
          <div v-show="showinput">
-            <b-input type="number" style="width:200px;" v-model="amount" class="form-control" value=""></b-input>
+            <b-form-input type="number" style="width:200px;" v-model="amount" class="form-control" value=""></b-form-input>
           </div>
       <div class="m-lg-4" v-show="payButton">
         <b-button squared variant="primary" @click="showCardDetails">Pay</b-button>
@@ -31,7 +31,7 @@
                       <label for="card">Card Details</label>
                       <card
                         ref="card-stripe"
-                        stripe="pk_test_rujjNssO7PKzOG6O8zLb5de500NxJweVtb"
+                        stripe="pk_test_M7Uxvl5M7uDMX1Bg6oXXDbbO00T420XKZe"
                         @change="complete = $event.complete"
                       />
                     </div>
@@ -52,8 +52,30 @@
       </client-only>
     </div>
     </div>
+    <div class="m-md-12 el-center"  v-show="successPage">
+      <div style="padding:10%;">
+      <h1 style="color:green;">Thank You !</h1>
+      <mdb-icon icon="check-square" />
+      <h5 style="color:gray;">Your Tip is received... </h5>
+      </div>
+    </div>
+    <div class="m-md-12 el-center" v-show="failurePage">
+     <div style="padding:10%;">
+      <h1 style="color:red;">Oops! Something went wrong ! </h1>
+      <h5 style="color:gray;"> Your tip is failed... </h5>
+    </div>
+    </div>
+
   </b-col>
 </template>
+<style scoped>
+.el-center {
+  text-align: center;
+  font-family: 'Monospace';
+}
+
+</style>
+</style>
 <script>
 import { Card, createToken } from "vue-stripe-elements-plus";
 
@@ -66,7 +88,10 @@ export default {
       amount: "",
       showinput: false,
       payButton: true,
-      cardDetails: false
+      cardDetails: false,
+      payment: true,
+      successPage: false,
+      failurePage: false
     };
   },
   methods: {
@@ -77,14 +102,16 @@ export default {
       this.showinput = true;
     },
     showCardDetails(){
-this.payButton = false,
-this.cardDetails = true
+    this.payButton = false,
+    this.cardDetails = true
     },
    async handleSubmit() {
+           alert(this.$axios.baseUrl)
+
       console.log("To do Store in db");
     },
     async pay() {
-       this.loading = true
+      this.loading = true
       let token
       try {
         const response = await createToken()
@@ -92,27 +119,26 @@ this.cardDetails = true
         console.log("\n Token : ",token);
       } catch (err) {
         alert('An error occurred.')
+        console.log(err)
         this.loading = false
         return
       }
-      console.log("\n Paying...");
-      var result = await this.$axios.$post('http://localhost/api/pay', {keyword: ""}, { progress: true })
-      console.log("\n Result...",result);
-
-    //   fetch("/pay", {
-    //       method: "POST",
-    //       headers: {"Content-Type": "application/json"},
-    //       body: JSON.stringify(token)
-    //     })
-    //     .then(output => {
-    //       console.log("Output")
-    //       // if (output.status === "succeeded")
-    //       //   document.getElementById("shop").innerHTML = "<p>Purchase complete!</p>";
-    //     })
-       
+      console.log("\n Paying...")
+      var reqData = {token : token, amount: this.amount}
+      this.loading = true 
+      var result = await this.$axios.$post('http://localhost:3000/api/pay', reqData, { progress: true })
+      console.log("\n Result is : ",result);
+      if(result && result.status === "200" && result.receipt_url){
+            this.payment = false
+            this.successPage = true
+        } else {
+            this.payment = false
+            this.failurePage = true
+        }
+          this.loading = false       
 
     }
   }
-};
+}; 
 </script>
 
