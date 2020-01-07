@@ -19,38 +19,38 @@
       </div>
       
       <div class="m-md-12" v-show="cardDetails">
-      <client-only placeholder="Chargement...">
-        <div class="m-md-12">
-          <div uk-grid>
-            <div class="uk-width-1-3@m">
-              <div class="uk-card uk-card-default uk-card-body uk-width-1-1@m">
-                <form @submit.stop.prevent="handleSubmit">
-                  <fieldset class="uk-fieldset">
-                    <legend class="uk-legend"></legend>
-                    <div class="uk-margin">
-                      <label for="card">Card Details</label>
-                      <card
-                        ref="card-stripe"
-                        stripe="pk_test_M7Uxvl5M7uDMX1Bg6oXXDbbO00T420XKZe"
-                        @change="complete = $event.complete"
-                      />
-                    </div>
+        <client-only placeholder="Chargement...">
+          <div class="m-md-12">
+            <div uk-grid>
+              <div class="uk-width-1-3@m">
+                <div class="uk-card uk-card-default uk-card-body uk-width-1-1@m">
+                  <form @submit.stop.prevent="handleSubmit">
+                    <fieldset class="uk-fieldset">
+                      <legend class="uk-legend"></legend>
+                      <div class="uk-margin">
+                        <label for="card">Card Details</label>
+                        <card
+                          ref="card-stripe"
+                          stripe="pk_test_M7Uxvl5M7uDMX1Bg6oXXDbbO00T420XKZe"
+                          @change="complete = $event.complete"
+                        />
+                      </div>
 
-                    <div class="uk-margin">
-                      <button
-                        class="uk-button uk-button-primary"
-                        @click="pay"
-                        name="button"
-                      >Proceed to pay ( {{ amount }} €)</button>
-                    </div>
-                  </fieldset>
-                </form>
+                      <div class="uk-margin">
+                        <button
+                          class="uk-button uk-button-primary"
+                          @click="pay"
+                          name="button"
+                        >Proceed to pay ( {{ amount }} $)</button>
+                      </div>
+                    </fieldset>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </client-only>
-    </div>
+        </client-only>
+      </div>
     </div>
     <div class="m-md-12 el-center"  v-show="successPage">
       <div style="padding:10%;">
@@ -120,7 +120,7 @@ export default {
       }
       console.log("\n Paying...")
       var reqData = {token : token, amount: this.amount}
-      var result = await this.$axios.$post('http://localhost:3000/api/pay', reqData, { progress: true })
+      var result = await this.$axios.$post('http://zap.wetheorigin.com/api/pay', reqData, { progress: true })
       console.log("\n Result is : ",result);
       if(result && result.status === "200" && result.receipt_url){
             this.payment = false
