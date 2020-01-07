@@ -60,7 +60,7 @@ module.exports = {
   },
   server: {
     port: 3000, // default: 3000
-    host: '::', // default: localhost
+    host: 'localhost', // default: localhost
   },
   serverMiddleware: ['~/api/calls']
 }
