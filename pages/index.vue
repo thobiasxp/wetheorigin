@@ -120,7 +120,7 @@ export default {
       }
       console.log("\n Paying...")
       var reqData = {token : token, amount: this.amount}
-      var result = await this.$axios.$post('http://zap.wetheorigin.com/api/pay', reqData, { progress: true })
+      var result = await this.$axios.$post('http://15.222.176.70/api/pay', reqData, { progress: true })
       console.log("\n Result is : ",result);
       if(result && result.status === "200" && result.receipt_url){
             this.payment = false
