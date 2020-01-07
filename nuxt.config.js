@@ -58,5 +58,9 @@ module.exports = {
     extend (config, ctx) {
     }
   },
+  server: {
+    port: 3000, // default: 3000
+    host: '::', // default: localhost
+  },
   serverMiddleware: ['~/api/calls']
 }
