@@ -106,8 +106,6 @@ export default {
     this.cardDetails = true
     },
    async handleSubmit() {
-           alert(this.$axios.baseUrl)
-
       console.log("To do Store in db");
     },
     async pay() {
@@ -118,7 +116,7 @@ export default {
         token = response.token.id
         console.log("\n Token : ",token);
       } catch (err) {
-        alert('An error occurred.')
+        alert('An error occurred in get token.')
         console.log(err)
         this.loading = false
         return
