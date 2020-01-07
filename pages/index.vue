@@ -55,7 +55,7 @@
     <div class="m-md-12 el-center"  v-show="successPage">
       <div style="padding:10%;">
       <h1 style="color:green;">Thank You !</h1>
-      <h5 style="color:gray;">Your Tip is received... </h5>
+      <h5 style="color:gray;">Your Tip is received...</h5><a :href="receipt_url">Click here to see your receipt.</a>
       </div>
     </div>
     <div class="m-md-12 el-center" v-show="failurePage">
@@ -90,7 +90,8 @@ export default {
       cardDetails: false,
       payment: true,
       successPage: false,
-      failurePage: false
+      failurePage: false,
+      receipt_url: "#"
     };
   },
   methods: {
@@ -125,6 +126,7 @@ export default {
       if(result && result.status === "200" && result.receipt_url){
             this.payment = false
             this.successPage = true
+            this.receipt_url = result.receipt_url
         } else {
             this.payment = false
             this.failurePage = true
