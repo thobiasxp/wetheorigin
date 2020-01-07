@@ -20,7 +20,7 @@ app.post('/pay', async function (req, res, next) {
       // Transform cents to dollars.
       amount: parseFloat(req.body.amount, 100) * 100,
       currency: 'usd',
-      description: `Payment ${new Date()} by Neel`,
+      description: `Payment ${new Date()} by Test User`,
       source: token,
     });
     console.log('result:', result.status)
