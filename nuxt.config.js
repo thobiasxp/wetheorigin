@@ -58,9 +58,5 @@ module.exports = {
     extend (config, ctx) {
     }
   },
-  server: {
-    port: process.env.PORT ? process.env.PORT : 80, // default: 3000
-    host: process.env.HOST ? process.env.HOST: '::', // default: localhost
-  },
   serverMiddleware: ['~/api/calls']
 }
