@@ -60,7 +60,7 @@ module.exports = {
   },
   server: {
     port: process.env.PORT ? process.env.PORT : 3000, // default: 3000
-    host: process.env.HOST ? process.env.HOST : '::', // default: localhost
+    host: process.env.HOST ? process.env.HOST : '127.0.0.1', // default: localhost
   },
   serverMiddleware: ['~/api/calls']
 }
