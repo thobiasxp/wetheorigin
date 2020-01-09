@@ -51,7 +51,7 @@ module.exports = {
   /*
   ** Build configuration
   */
-  buildDir: '_nuxt/dist/',
+  buildDir: '_nuxt',
   build: {
     // publicPath: '/_nuxt/',
     /*
