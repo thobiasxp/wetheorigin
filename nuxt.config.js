@@ -41,7 +41,7 @@ module.exports = {
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://bootstrap-vue.js.org
+    // Doc: https://bootstrap-vue.js.or
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
   ],
@@ -60,7 +60,7 @@ module.exports = {
   },
   server: {
     port: process.env.PORT ? process.env.PORT : 3000, // default: 3000
-    host: process.env.HOST ? process.env.HOST : '127.0.0.1', // default: localhost
+    host: process.env.HOST ? process.env.HOST : '0.0.0.0', // default: localhost
   },
   serverMiddleware: ['~/api/calls']
 }
