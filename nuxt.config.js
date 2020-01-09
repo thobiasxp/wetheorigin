@@ -51,9 +51,9 @@ module.exports = {
   /*
   ** Build configuration
   */
-  buildDir: '_nuxt',
+  buildDir: '_nuxt/dist/',
   build: {
-    publicPath: '/_nuxt/',
+    // publicPath: '/_nuxt/',
     /*
     ** You can extend webpack config here
     */
